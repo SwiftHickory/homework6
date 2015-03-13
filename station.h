@@ -43,4 +43,19 @@ struct entryType {
     string orientation; // one to three characters, case insensitive
 };
 
+bool setNetworkCode(string network_str, networkCodeType &network_enum);
+string getNetworkCode(networkCodeType network_enum);
+
+bool setStationCode(string station_str);
+string getStationCode(string station_str);
+
+bool setBandType(string bandType_str, typeOfBandType &bandType_enum);
+string getBandType(typeOfBandType bandType_enum);
+
+bool setInstrumentType(string instrumentType_str, typeOfInstrumentType &instrumentType_enum);
+string getInstrumentType(typeOfInstrumentType instrumentType_enum);
+
+bool setOrientation(string orientation_str);
+string getOrientation(string orientation_str);
+
 #endif

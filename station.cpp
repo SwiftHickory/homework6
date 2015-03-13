@@ -1,20 +1,5 @@
 #include "station.h"
 
-bool setNetworkCode(string network_str, networkCodeType &network_enum);
-string getNetworkCode(networkCodeType network_enum);
-
-bool setStationCode(string station_str);
-string getStationCode(string station_str);
-
-bool setBandType(string bandType_str, typeOfBandType &bandType_enum);
-string getBandType(typeOfBandType bandType_enum);
-
-bool setInstrumentType(string instrumentType_str, typeOfInstrumentType &instrumentType_enum);
-string getInstrumentType(typeOfInstrumentType instrumentType_enum);
-
-bool setOrientation(string orientation_str);
-string getOrientation(string orientation_str);
-
 bool setNetworkCode(string network_str, networkCodeType &network_enum) {
 
 	if (network_str == "CE") {
@@ -180,7 +165,7 @@ bool setOrientation(string str) {
     if (str.length() < 4) {
         if (isdigit(str[0])) {
             for (int i = 0; i < str.length(); i++) {
-                if (!isdigit(str[i])) {
+                if (str[i] != '1' && str[i] != '2' && str[i] != '3') {
                     return false;
                 }
             }
@@ -204,5 +189,5 @@ bool setOrientation(string str) {
 string getOrientation(string orientation_str) {
 
 	return orientation_str;
-	
+
 }
