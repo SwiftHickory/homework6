@@ -1,48 +1,50 @@
 #include "earthquake.h"
 
-void setEventID(string &eventID_str) {
+void setEventID(string eventID, earthquake &eq) {
 
-	return;
-
-}
-
-string getEventID(string eventID_str) {
-
-	return eventID_str;
+	eq.eventID = eventID;
 
 }
 
-void setDate(string &date_str, string &date_str, int &year_int, months &month_enum, int &day_int) {
+string getEventID(earthquake eq) {
+
+	return eq.eventID;
+
+}
+
+void setDate(string date, earthquake &eq) {
 
 	// the length of date must be 10
-    if (date_str.length() == 10) {
+    if (date.length() == 10) {
 
-        setYear(year_str, year_int);
-        setMonth(month_str, month_enum);
-        setDay(day_str, day_int, month_enum, year_int);
+    	// date format is mm/dd/yyyy
+    	string month = date.substr(0, 2);
+    	string day = date.substr(3, 2);
+    	string year = date.substr(6, 4);
 
-        // month, day and year should be numbers 
-        if (!is_digits(month + day + year)) {
-            errorMessageWithExit("Error: invalid date of this earthquake!\n");
-        }
+        setYear(year, eq);
+        setMonth(month, eq);
+        setDay(day,eq);
 
         // date format is mm/dd/year or mm-dd-year
         if ((date[2] != '/' || date[5] != '/') && (date[2] != '-' || date[5] != '-')) {
             errorMessageWithExit("Error: invalid date format of this earthquake!\n");
         }
+
+        eq.date = date;
     } else {
         errorMessageWithExit("Error: invalid date of this earthquake!\n");
     }
 
 }
 
-string getDate(int &year_int, months &month_enum, int &day_int) {
+string getDate(earthquake eq) {
 
-	return getMonth(month_enum) + "-" + getDay(day_int) + "-" + getYear(year_int);
+	return eq.date;
 
 }
 
-void setTime(string &time_str) {
+void setTime(string time, earthquake &eq) {
 
 	// the length of time must be 12
     if (time.length() == 12) {
@@ -57,124 +59,194 @@ void setTime(string &time_str) {
             errorMessageWithExit("Error: invalid time of this earthquake!\n");
         }
 
-        int hour_int = atoi(hour.c_str());
-        int minute_int = atoi(minute.c_str());
-        int second_int = atoi(second.c_str());
-
-        // check the validity of time
-        if ( hour_int < 0 || hour_int > 23) {
-        	errorMessageWithExit("Error: invalid time hour of this earthquake!\n");
-        }
-
-        if ( minute_int < 0 || minute_int > 59) {
-        	errorMessageWithExit("Error: invalid time minute of this earthquake!\n");
-        }
-
-        if ( second_int < 0 || second_int > 59) {
-        	errorMessageWithExit("Error: invalid time second of this earthquake!\n");
-        }
+        setHour(hour, eq);
+        setMinute(minute, eq);
+        setSecond(second, eq);
+        setMillisecond(millisecond, eq);
 
         // check for delimer
         if (time[2] != ':' || time[5] != ':' || time[8] != '.') {
             errorMessageWithExit("Error: invalid time format of this earthquake!\n");
         }
+
+        eq.time = time;
     } else {
         errorMessageWithExit("Error: invalid time of this earthquake!\n");
     }
 
 }
 
-string getTime(string time_str) {
+string getTime(earthquake eq) {
 
-	return time_str;
-
-}
-
-void setTimeZone(string &timeZone_str) {
-
-	// time zone must be three characters
-    if (timeZone_str.length() != 3) {
-        errorMessageWithExit("Error: invalid time zone of this earthquake!\n");
-    }
+	return eq.time;
 
 }
 
-string getTimeZone(string timeZone_str) {
+void setHour(string hour, earthquake &eq) {
 
-	return timeZone_str;
+	if (!is_digits(hour)) {
+		errorMessageWithExit("Error: invalid time hour of this earthquake!\n");
+	} else {
+		eq.hour = atoi(hour.c_str());
 
-}
-
-void setEarthquakeName(string &earthquakeName_str) {
-
-	return;
-
-}
-
-string getEarthqaukeName(string earthqaukeName_str) {
-
-	return earthqaukeName_str;
-}
-
-void setMonth(string date_str, months &month_enum) {
-
-	string month_str = date_str.substr(0, 2);
-
-	if (month_str == "01") {
-		month_enum = January;
+		if (eq.hour < 0 || eq.hour > 23) {
+        	errorMessageWithExit("Error: invalid time hour of this earthquake!\n");
+        }
 	}
 
-    if (month_str == "02") {
-    	month_enum = February;
+}
+
+string getHour(earthquake eq) {
+
+	return intToString(eq.hour);
+
+}
+
+void setMinute(string minute, earthquake &eq) {
+
+	if (!is_digits(minute)) {
+		errorMessageWithExit("Error: invalid time minute of this earthquake!\n");
+	} else {
+		eq.minute = atoi(minute.c_str());
+
+		if (eq.minute < 0 || eq.minute > 59) {
+        	errorMessageWithExit("Error: invalid time minute of this earthquake!\n");
+        }
+	}
+
+}
+
+string getMinute(earthquake eq) {
+
+	return intToString(eq.minute);
+
+}
+
+void setSecond(string second, earthquake &eq) {
+
+	if (!is_digits(second)) {
+		errorMessageWithExit("Error: invalid time second of this earthquake!\n");
+	} else {
+		eq.second = atoi(second.c_str());
+
+		if (eq.second < 0 || eq.second > 59) {
+        	errorMessageWithExit("Error: invalid time second of this earthquake!\n");
+        }
+	}
+
+}
+
+string getSecond(earthquake eq) {
+
+	return intToString(eq.second);
+
+}
+
+void setMillisecond(string millisecond, earthquake &eq) {
+
+	if (!is_digits(millisecond)) {
+		errorMessageWithExit("Error: invalid time millisecond of this earthquake!\n");
+	} else {
+		eq.millisecond = atoi(millisecond.c_str());
+
+		if (eq.millisecond< 0) {
+        	errorMessageWithExit("Error: invalid time millisecond of this earthquake!\n");
+        }
+	}
+
+}
+
+string getMillisecond(earthquake eq) {
+
+	return intToString(eq.millisecond);
+
+}
+
+void setTimeZone(string timeZone, earthquake &eq) {
+
+	// time zone must be three characters
+    if (timeZone.length() != 3) {
+        errorMessageWithExit("Error: invalid time zone of this earthquake!\n");
+    } else {
+    	eq.timeZone = timeZone;
     }
 
-    if (month_str == "03") {
-    	month_enum = March;
+}
+
+string getTimeZone(earthquake eq) {
+
+	return eq.timeZone;
+
+}
+
+void setEarthquakeName(string earthquakeName, earthquake &eq) {
+
+	eq.earthquakeName = earthquakeName;
+
+}
+
+string getEarthqaukeName(earthquake eq) {
+
+	return eq.earthqaukeName;
+}
+
+void setMonth(string month, earthquake &eq) {
+
+	if (month == "01") {
+		eq.month = January;
+	}
+
+    if (month == "02") {
+    	eq.month = February;
     }
 
-    if (month_str == "04") {
-    	month_enum = April;
+    if (month == "03") {
+    	eq.month = March;
     }
 
-    if (month_str == "05") {
-    	month_enum = May;
+    if (month == "04") {
+    	eq.month = April;
     }
 
-    if (month_str == "06") {
-    	month_enum = June;
+    if (month == "05") {
+    	eq.month = May;
     }
 
-    if (month_str == "07") {
-    	month_enum = July;
+    if (month == "06") {
+    	eq.month = June;
     }
 
-    if (month_str == "08") {
-    	month_enum = August;
+    if (month == "07") {
+    	eq.month = July;
     }
 
-    if (month_str == "09") {
-    	month_enum = September；
+    if (month == "08") {
+    	eq.month = August;
     }
 
-    if (month_str == "10") {
-    	month_enum = October;
+    if (month == "09") {
+    	eq.month = September；
     }
 
-    if (month_str == "11") {
-    	month_enum = November;
+    if (month == "10") {
+    	eq.month = October;
     }
 
-    if (month_str == "12") {
-    	month_enum = December;
+    if (month == "11") {
+    	eq.month = November;
+    }
+
+    if (month == "12") {
+    	eq.month = December;
     }
     
     errorMessageWithExit("Error: invalid month of this earthquake!\n");
 
 }
 
-string getMonth(months month_enum) {
+string getMonth(earthquake eq) {
 
-	switch (month_enum) {
+	switch (eq.month) {
 		case January:
 			return "January";
 			break;
@@ -215,111 +287,107 @@ string getMonth(months month_enum) {
 
 }
 
-void setDay(string date_str, int &day_int, months month_enum, int year_int) {
-
-	string day_str = date_str.substr(3, 2);
+void setDay(string day, earthquake &eq) {
 
 	// day should be numbers 
-    if (!is_digits(day_str)) {
+    if (!is_digits(day)) {
         errorMessageWithExit("Error: invalid date day of this earthquake!\n");
      } else {
-     	day_int = atoi(year_str.c_str());
-     	if (day_int < 0 || day_int > daysOfAMonth(month_enum, year_int)) {
+     	eq.day = atoi(day.c_str());
+     	if (eq.day < 0 || eq.day > daysOfAMonth(eq.month, eq.year)) {
      		errorMessageWithExit("Error: invalid date day of this earthquake!\n");
      	}
      }
 
 }
 
-string getDay(int data_int) {
+string getDay(earthquake eq) {
 
-	return intToString(day_int);
+	return intToString(eq.day);
 
 }
 
-void setYear(string date_str, int &year_int) {
-
-	string year_str = date_str.substr(6, 4);
+void setYear(string year, earthquake &eq) {
 
 	// year should be numbers 
-    if (!is_digits(year_str)) {
+    if (!is_digits(year)) {
         errorMessageWithExit("Error: invalid date year of this earthquake!\n");
      } else {
-     	year_int = atoi(year_str.c_str());
+     	eq.year = atoi(year.c_str());
      }
 
 }
 
-string getYear(int year_int) {
+string getYear(earthquake eq) {
 
-	return intToString(year_int);
-
-}
-
-void setEvlo(double &evlo) {
-
-	return;
+	return intToString(eq.year);
 
 }
 
-double getEvlo(double evlo) {
+void setEvlo(double evlo, earthquake &eq) {
 
-	return evlo;
-
-}
-
-void setEvla(double &evla) {
-
-	return;
+	eq.evlo = evlo;
 
 }
 
-double getEvla(double evla) {
+double getEvlo(earthquake eq) {
 
-	return evla;
-
-}
-
-void setEvdp(double &evdp) {
-
-	return;
+	return eq.evlo;
 
 }
 
-double getEvdp(double evdp) {
+void setEvla(double evla, earthquake &eq) {
 
-	return evdp;
+	eq.evla = evla;
 
 }
 
-void setMagnitudeType(string magnitudeType_str, typeOfMagnitudeType &magnitudeType_enum) {
+double getEvla(earthquake eq) {
+
+	return eq.evla;
+
+}
+
+void setEvdp(double evdp, earthquake &eq) {
+
+	eq.evdp = evdp;
+
+}
+
+double getEvdp(earthquake eq) {
+
+	return eq.evdp;
+
+}
+
+void setMagnitudeType(string magnitudeType, earthquake &eq) {
 
 	// case insensitive so convert it to lower case first
-    magnitudeType_str = lowerString(magnitudeType_str);
+    magnitudeType = lowerString(magnitudeType);
 
-    if (magnitudeType_str == "ml") {
-        magnitudeType_enum = ml;
+    if (magnitudeType == "ml") {
+        eq.magnitudeType = ml;
     }
 
-    if (magnitudeType_str == "ms") {
-        magnitudeType_enum = ms;
+    if (magnitudeType == "ms") {
+        eq.magnitudeType = ms;
     }
 
-    if (magnitudeType_str == "mb") {
-        magnitudeType_enum = mb;
+    if (magnitudeType == "mb") {
+        eq.magnitudeType = mb;
     }
 
-    if (magnitudeType_str == "mw") {
-        magnitudeType_enum = mw;
+    if (magnitudeType == "mw") {
+        eq.magnitudeType = mw;
     }
 
     errorMessageWithExit("Error: invalid magnitude type of this earthquake!\n");
 
 }
 
-string getMagnitudeType(typeOfMagnitudeType &magnitudeType_enum) {
+string getMagnitudeType(earthquake eq) {
 
-	switch (magnitudeType_enum) {
+	switch (eq.magnitudeType) {
         case ml:
             return "Ml";
             break;
@@ -336,30 +404,32 @@ string getMagnitudeType(typeOfMagnitudeType &magnitudeType_enum) {
 
 }
 
-void setMagnitude(float &magnitude) {
+void setMagnitude(float magnitude, earthquake eq) {
 
 	// magnitude must be a positive number
     if (magnitude <= 0) {
         errorMessageWithExit("Error: magnitude must be a positive number\n");
+    } else {
+    	eq.magnitude = magnitude;
     }
 
 }
 
-float getMagnitude(float magnitude) {
+float getMagnitude(earthquake eq) {
 
-	return magnitude;
+	return eq.magnitude;
 
 }
 
 // return the numer of days in a month
-int daysOfAMonth(months month_enum, int year_int) {
+int daysOfAMonth(months month, int year) {
 
-	switch (month_enum) {
+	switch (month) {
 		case January:
 			return 31;
 			break;
 		case February:
-			return year_int % 4 == 0 ? 28 :29;
+			return year % 4 == 0 ? 28 :29;
 			break;
 		case March:
 			return 31;

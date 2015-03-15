@@ -1,3 +1,14 @@
+/******************************************************************************
+-   yang.cpp
+-   Prog Tools for Scits Engrs - CIVL 8903 Homework VI
+-
+-   File Discreption: struct type define of earthquake
+-
+-   Author: Yang Yang
+-
+-   Github Repository: https://github.com/SwiftHickory/homework6.git
+******************************************************************************/
+
 #ifndef EARTHQUAKE_H
 #define EARTHQUAKE_H
 
@@ -40,50 +51,62 @@ struct earthquake {
     double evlo;
     double evla;
     double evdp;
-    typeOfMagnitudeType magnitudeType_enum;
+    typeOfMagnitudeType magnitudeType;
     float magnitude;
 };
 
-void setEventID(string &eventID_str);
-string getEventID(string eventID_str);
+void setEventID(string eventID, earthquake &eq);
+string getEventID(earthquake eq);
 
-void setDate(string &date_str, int &year_int, months &month_enum, int &day_int);
-string getDate(int &year_int, months &month_enum, int &day_int);
+void setDate(string date, earthquake &eq);
+string getDate(earthquake eq);
 
-void setTime(string &time_str);
-string getTime(string time_str);
+void setTime(string time, earthquake &eq);
+string getTime(earthquake eq);
 
-void setTimeZone(string &timeZone_str);
-string getTimeZone(string timeZone_str);
+void setHour(string hour, earthquake &eq);
+string getHour(earthquake eq);
 
-void setEarthquakeName(string &earthquakeName_str);
-string getEarthqaukeName(string earthqaukeName_str);
+void setMinute(string minute, earthquake &eq);
+string getMinute(earthquake eq);
 
-void setMonth(string month_str, months &month_enum);
-string getMonth(months month_enum);
+void setSecond(string second, earthquake &eq);
+string getSecond(earthquake eq);
 
-void setDay(string day_str, int &day_int);
-string getDay(int day_int);
+void setMillisecond(string millisecond, earthquake &eq);
+string getMillisecond(earthquake eq);
 
-void setYear(string year_str, int &year_int);
-string getYear(int year_int);
+void setTimeZone(string timeZone, earthquake &eq);
+string getTimeZone(earthquake eq);
 
-void setEvlo(double &evlo);
-double getEvlo(double evlo);
+void setEarthquakeName(string earthquakeName, earthquake &eq);
+string getEarthqaukeName(earthquake eq);
 
-void setEvla(double &evla);
-double getEvla(double evla);
+void setMonth(string month, earthquake &eq);
+string getMonth(earthquake eq);
 
-void setEvdp(double &evdp);
-double getEvdp(double evdp);
+void setDay(string day, earthquake &eq);
+string getDay(earthquake eq);
 
-void setMagnitudeType(string magnitudeType_str, typeOfMagnitudeType &magnitudeType_enum);
-string getMagnitudeType(typeOfMagnitudeType &magnitudeType_enum);
+void setYear(string year, earthquake &eq);
+string getYear(earthquake eq);
 
-void setMagnitude(float &magnitude);
-float getMagnitude(float magnitude);
+void setEvlo(double evlo, earthquake &eq);
+double getEvlo(earthquake eq);
+
+void setEvla(double evla, earthquake &eq);
+double getEvla(earthquake eq);
+
+void setEvdp(double evdp, earthquake &eq);
+double getEvdp(earthquake eq);
+
+void setMagnitudeType(string magnitudeType, earthquake &eq);
+string getMagnitudeType(earthquake eq);
+
+void setMagnitude(float magnitude, earthquake &eq);
+float getMagnitude(earthquake eq);
 
 // return the numer of days in a month
-int daysOfAMonth(months month_enum, int year_int);
+int daysOfAMonth(months month, int year);
 
 #endif

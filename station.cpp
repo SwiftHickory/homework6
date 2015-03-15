@@ -1,29 +1,29 @@
 #include "station.h"
 
-bool setNetworkCode(string network_str, networkCodeType &network_enum) {
+bool setNetworkCode(string networkCode, station &st) {
 
-	if (network_str == "CE") {
-        network_enum = CE;
+	if (networkCode == "CE") {
+        st.networkCode = CE;
         return true;
     }
 
-    if (network_str == "CI") {
-        network_enum = CI;
+    if (networkCode == "CI") {
+        st.networkCode = CI;
         return true;
     }
 
-    if (network_str == "FA") {
-        network_enum = FA;
+    if (networkCode == "FA") {
+        st.networkCode = FA;
         return true;
     }
 
-    if (network_str == "NP") {
-        network_enum = NP;
+    if (networkCode == "NP") {
+        st.networkCode = NP;
         return true;
     }
 
-    if (network_str == "WR") {
-        network_enum = WR;
+    if (networkCode == "WR") {
+        st.networkCode = WR;
         return true;
     }
 
@@ -32,9 +32,9 @@ bool setNetworkCode(string network_str, networkCodeType &network_enum) {
 
 }
 
-string getNetworkCode(networkCodeType network_enum) {
+string getNetworkCode(station st) {
 
-	switch (network_enum) {
+	switch (st.networkCode) {
         case CE:
             return "CE";
             break;
@@ -54,15 +54,17 @@ string getNetworkCode(networkCodeType network_enum) {
 
 }
 
-bool setStationCode(string station_str) {
+bool setStationCode(string stationCode, station &st) {
 
 	// station code must be 3 captital letters or 5 numeric characters
-    if (str.length() == 5 && is_digits(str)) {
+    if (stationCode.length() == 5 && is_digits(stationCode)) {
+    	st.stationCode = stationCode;
         return true;
     }
 
-    if (str.length() == 3) {
-        if (isupper(str[0]) && isupper(str[1]) && isupper(str[2])) {
+    if (stationCode.length() == 3) {
+        if (isupper(stationCode[0]) && isupper(stationCode[1]) && isupper(stationCode[2])) {
+        	st.stationCode = stationCode;
             return true;
         }
     }
@@ -71,29 +73,29 @@ bool setStationCode(string station_str) {
 
 }
 
-string getStationCode(string station_str) {
+string getStationCode(station st) {
 
-	return station_str;
+	return st.stationCode;
 
 }
 
-bool setBandType(string bandType_str, typeOfBandType &bandType_enum) {
+bool setBandType(string bandType, station &st) {
 
 	// case insensitive so convert it to lower case first
-    bandType_str = lowerString(bandType_str);
+    bandType = lowerString(bandType);
 
-    if (bandType_str == "long-period") {
-        bandType_enum = longperiod;
+    if (bandType == "long-period") {
+        st.typeOfBand = longperiod;
         return true;
     }
 
-    if (bandType_str == "short-period") {
-        bandType_enum = shortperiod;
+    if (bandType == "short-period") {
+        st.typeOfBand = shortperiod;
         return true;
     }
 
-    if (bandType_str == "broadband") {
-        bandType_enum = broadband;
+    if (bandType == "broadband") {
+        st.typeOfBand = broadband;
         return true;
     }
 
@@ -101,9 +103,9 @@ bool setBandType(string bandType_str, typeOfBandType &bandType_enum) {
 
 }
 
-string getBandType(typeOfBandType bandType_enum) {
+string getBandType(station st) {
 
-	switch (bandType_enum) {
+	switch (st.typeOfBand) {
         case longperiod:
             return "L";
             break;
@@ -117,23 +119,23 @@ string getBandType(typeOfBandType bandType_enum) {
 
 }
 
-bool setInstrumentType(string instrumentType_str, typeOfInstrumentType &instrumentType_enum) {
+bool setInstrumentType(string instrumentType, station &st) {
 
 	// case insensitive so convert it to lower case first
-    instrumentType_str = lowerString(instrumentType_str);
+    instrumentType = lowerString(instrumentType);
 
-    if (instrumentType_str == "high-gain") {
-        instrumentType_enum = highgain;
+    if (instrumentType == "high-gain") {
+        st.typeOfInstrument = highgain;
         return true;
     }
 
-    if (instrumentType_str == "low-gain") {
-        instrumentType_enum = lowgain;
+    if (instrumentType == "low-gain") {
+        st.typeOfInstrument = lowgain;
         return true;
     }
 
-    if (instrumentType_str == "accelerometer") {
-        instrumentType_enum = accelerometer;
+    if (instrumentType == "accelerometer") {
+        st.typeOfInstrument = accelerometer;
         return true;
     }
 
@@ -141,9 +143,9 @@ bool setInstrumentType(string instrumentType_str, typeOfInstrumentType &instrume
 
 }
 
-string getInstrumentType(typeOfInstrumentType instrumentType_enum) {
+string getInstrumentType(station st) {
 
-	switch (instrumentType_enum) {
+	switch (st.typeOfInstrument) {
         case highgain:
             return "H";
             break;
@@ -157,7 +159,7 @@ string getInstrumentType(typeOfInstrumentType instrumentType_enum) {
 
 }
 
-bool setOrientation(string str) {
+bool setOrientation(string str, station &st) {
 
 	// case insensitive so convert it to lower case first
     str = lowerString(str);
@@ -170,6 +172,8 @@ bool setOrientation(string str) {
                 }
             }
 
+            st.orientation =  str;
+
             return true;
         } else if (islower(str[0])) {
             for (int i = 0; i < str.length(); i++) {
@@ -177,6 +181,8 @@ bool setOrientation(string str) {
                     return false;
                 }
             }
+
+            st.orientation = str
 
             return true;
         }
@@ -186,8 +192,8 @@ bool setOrientation(string str) {
 
 }
 
-string getOrientation(string orientation_str) {
+string getOrientation(station st) {
 
-	return orientation_str;
+	return st.orientation;
 
 }

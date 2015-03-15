@@ -35,7 +35,7 @@ enum typeOfInstrumentType {
     accelerometer  // N
 };
 
-struct entryType {
+struct station {
     networkCodeType networkCode;
     string stationCode;
     typeOfBandType typeOfBand;
@@ -43,19 +43,19 @@ struct entryType {
     string orientation; // one to three characters, case insensitive
 };
 
-bool setNetworkCode(string network_str, networkCodeType &network_enum);
-string getNetworkCode(networkCodeType network_enum);
+bool setNetworkCode(string networkCode, station &st);
+string getNetworkCode(station st);
 
-bool setStationCode(string station_str);
-string getStationCode(string station_str);
+bool setStationCode(string stationCode, station &st);
+string getStationCode(station st);
 
-bool setBandType(string bandType_str, typeOfBandType &bandType_enum);
-string getBandType(typeOfBandType bandType_enum);
+bool setBandType(string bandType, station &st);
+string getBandType(station st);
 
-bool setInstrumentType(string instrumentType_str, typeOfInstrumentType &instrumentType_enum);
-string getInstrumentType(typeOfInstrumentType instrumentType_enum);
+bool setInstrumentType(string instrumentType, station &st);
+string getInstrumentType(station st);
 
-bool setOrientation(string orientation_str);
-string getOrientation(string orientation_str);
+bool setOrientation(string orientation, station &st);
+string getOrientation(station st);
 
 #endif
