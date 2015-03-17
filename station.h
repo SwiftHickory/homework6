@@ -40,7 +40,7 @@ struct station {
     string stationCode;
     typeOfBandType typeOfBand;
     typeOfInstrumentType typeOfInstrument;
-    string orientation; // one to three characters, case insensitive
+    string orientation;  // one to three characters, case insensitive
 };
 
 bool setNetworkCode(string networkCode, station &st);
