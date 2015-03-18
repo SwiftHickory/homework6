@@ -18,9 +18,13 @@
 #include <fstream>
 #include <string>
 
-#include "myFunction.h"
+#include "earthquake.h"
+#include "station.h"
 
 using namespace std;
+
+const extern string logFileName = "yang.log";
+extern ofstream logFile;
 
 // main function
 int main() {
@@ -28,6 +32,7 @@ int main() {
     ifstream inputFile;
     ofstream outputFile;
     string inputFileName;
+    earthquake eq;
     const string outputFileName = "yang.out";
 
     // prompt user for input file and open it
@@ -38,10 +43,10 @@ int main() {
     errorMessage("Opening file: " + inputFileName + "\n");
     errorMessage("Processing input...\n");
 
-    headerProcessing(inputFile, outputFile, outputFileName);
+    headerProcessing(inputFile, outputFile, outputFileName, eq);
     errorMessage("Header read correctly!\n");
 
-    tableProcessing(inputFile, outputFile);
+    tableProcessing(inputFile, outputFile, eq);
     errorMessage("Finished!\n");
 
     inputFile.close();

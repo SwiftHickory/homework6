@@ -1,5 +1,5 @@
 /******************************************************************************
--   yang.cpp
+-   station.h
 -   Prog Tools for Scits Engrs - CIVL 8903 Homework VI
 -
 -   File Discreption: struct type define of station
@@ -11,6 +11,10 @@
 
 #ifndef STATION_H
 #define STATION_H
+
+#include "earthquake.h"
+
+using namespace std;
 
 // case sensitive
 enum networkCodeType {
@@ -57,5 +61,11 @@ string getInstrumentType(station st);
 
 bool setOrientation(string orientation, station &st);
 string getOrientation(station st);
+
+// read table and then produce output
+void tableProcessing(ifstream &inputFile, ofstream &outputFile, earthquake eq);
+
+// read and processing one entry
+bool processOneEntry(ifstream &inputFile, station &entry, int entryNumber, string networkCode);
 
 #endif

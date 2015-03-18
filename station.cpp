@@ -1,4 +1,6 @@
 #include "station.h"
+#include "earthquake.h"
+#include "myFunction.h"
 
 bool setNetworkCode(string networkCode, station &st) {
 
@@ -182,7 +184,7 @@ bool setOrientation(string str, station &st) {
                 }
             }
 
-            st.orientation = str
+            st.orientation = str;
 
             return true;
         }
@@ -194,6 +196,96 @@ bool setOrientation(string str, station &st) {
 
 string getOrientation(station st) {
 
-	return st.orientation;
+	return upperString(st.orientation);
+
+}
+
+// read table and then produce output
+void tableProcessing(ifstream &inputFile, ofstream &outputFile, earthquake eq) {
+
+    int numberOfValidEntries = 0;
+    int numberOfEntryRead = 0;
+    int numberOfSignals = 0;
+    string networkCode;
+    bool isValidEntry = true;
+    static const int maximumValidEntries = 300;
+    station entry[maximumValidEntries];
+
+    // read the file to the end of the file or reach maximum valid entry number
+    while (inputFile >> networkCode && numberOfValidEntries < maximumValidEntries) {
+        numberOfEntryRead++;
+
+        if (processOneEntry(inputFile, entry[numberOfValidEntries], numberOfEntryRead, networkCode)) {
+            numberOfSignals += entry[numberOfValidEntries].orientation.length();
+            numberOfValidEntries++;;
+        }
+    }
+
+    outputFile << numberOfSignals << endl;
+    
+    // print all the signals to output file
+    for (int i = 0; i < numberOfValidEntries; i++) {
+    	string orientation = getOrientation(entry[i]);
+
+        for (int j = 0; j < orientation.length(); j++) {
+            stringstream singalStream;
+            singalStream << getEventID(eq) << ".";
+            singalStream << getNetworkCode(entry[i]) << ".";
+            singalStream << getStationCode(entry[i]) << ".";
+            singalStream << getBandType(entry[i]);
+            singalStream << getInstrumentType(entry[i]);
+            singalStream << orientation[j] << endl;
+
+            outputFile << singalStream.str();
+        }
+    }
+
+    errorMessage("Total invalid entries ignored: " + intToString(numberOfEntryRead - numberOfValidEntries) + "\n");
+    errorMessage("Totoal valid entries read: " + intToString(numberOfValidEntries) + "\n");
+    errorMessage("Total singal names produced: " + intToString(numberOfSignals) + "\n");
+
+}
+
+// read and processing one entry
+bool processOneEntry(ifstream &inputFile, station &entry, int entryNumber, string networkCode) {
+
+    string stationCode, typeOfInstrument, typeOfBand, orientation;
+    bool isValidEntry = true;
+
+    // convert networkCode to enum type
+    if (!setNetworkCode(networkCode, entry)) {
+        errorMessage("Entry # " + intToString(entryNumber) + " ignored. Invalid network.\n");
+        isValidEntry = false;
+    }
+
+    // read station code
+    inputFile >> stationCode;
+    if (!setStationCode(stationCode, entry)) {
+        errorMessage("Entry # " + intToString(entryNumber) + " ignored. Invalid station code.\n");
+        isValidEntry = false;
+    }
+
+	// read type of band
+    inputFile >> typeOfBand;
+    if (!setBandType(typeOfBand, entry)) {
+        errorMessage("Entry # " + intToString(entryNumber) + " ignored. Invalid instrument type.\n");
+        isValidEntry = false;
+    }
+
+    // read type of instrument
+    inputFile >> typeOfInstrument;
+    if (!setInstrumentType(typeOfInstrument, entry)) {
+        errorMessage("Entry # " + intToString(entryNumber) + " ignored. Invalid band type.\n");
+        isValidEntry = false;
+    }
+
+    // read orientation
+    inputFile >> orientation;
+    if (!setOrientation(orientation, entry)) {
+        errorMessage("Entry # " + intToString(entryNumber) + " ignored. Invalid orientation.\n");
+        isValidEntry = false;
+    }
+
+    return isValidEntry;
 
 }

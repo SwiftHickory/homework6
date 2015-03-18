@@ -8,8 +8,20 @@ CFLAGS =
 
 all: yang
 
-yang: yang.cpp
-	${CC} ${CFLAGS} $< -o $@
+yang: yang.o myFunction.o earthquake.o station.o
+	${CC} -o yang yang.o myFunction.o earthquake.o station.o
+
+yang.o: yang.cpp
+	${CC} -c yang.cpp
+
+myFunction.o: myFunction.cpp
+	${CC} -c myFunction.cpp
+
+earthquake.o: earthquake.cpp
+	${CC} -c earthquake.cpp
+
+station.o: station.cpp
+	${CC} -c station.cpp 
 
 clean:
-	rm -rf yang
+	rm -rf *.o

@@ -1,5 +1,5 @@
 /******************************************************************************
--   yang.cpp
+-   earthquake.h
 -   Prog Tools for Scits Engrs - CIVL 8903 Homework VI
 -
 -   File Discreption: struct type define of earthquake
@@ -11,6 +11,10 @@
 
 #ifndef EARTHQUAKE_H
 #define EARTHQUAKE_H
+
+#include "myFunction.h"
+
+using namespace std;
 
 // case insensitive
 enum typeOfMagnitudeType {
@@ -108,5 +112,8 @@ float getMagnitude(earthquake eq);
 
 // return the numer of days in a month
 int daysOfAMonth(months month, int year);
+
+// read header can then produce output header
+void headerProcessing(ifstream &inputFile, ofstream &outputFile, string outputFileName, earthquake &eq);
 
 #endif

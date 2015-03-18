@@ -1,4 +1,5 @@
 #include "earthquake.h"
+#include "myFunction.h"
 
 void setEventID(string eventID, earthquake &eq) {
 
@@ -187,57 +188,69 @@ void setEarthquakeName(string earthquakeName, earthquake &eq) {
 
 string getEarthqaukeName(earthquake eq) {
 
-	return eq.earthqaukeName;
+	return eq.earthquakeName;
 }
 
 void setMonth(string month, earthquake &eq) {
 
 	if (month == "01") {
 		eq.month = January;
+		return;
 	}
 
     if (month == "02") {
     	eq.month = February;
+    	return;
     }
 
     if (month == "03") {
     	eq.month = March;
+    	return;
     }
 
     if (month == "04") {
     	eq.month = April;
+    	return;
     }
 
     if (month == "05") {
     	eq.month = May;
+    	return;
     }
 
     if (month == "06") {
     	eq.month = June;
+    	return;
     }
 
     if (month == "07") {
     	eq.month = July;
+    	return;
     }
 
     if (month == "08") {
     	eq.month = August;
+    	return;
     }
 
     if (month == "09") {
-    	eq.month = September；
+    	eq.month = September;
+    	return;
     }
 
     if (month == "10") {
     	eq.month = October;
+    	return;
     }
 
     if (month == "11") {
     	eq.month = November;
+    	return;
     }
 
     if (month == "12") {
     	eq.month = December;
+    	return;
     }
     
     errorMessageWithExit("Error: invalid month of this earthquake!\n");
@@ -367,18 +380,22 @@ void setMagnitudeType(string magnitudeType, earthquake &eq) {
 
     if (magnitudeType == "ml") {
         eq.magnitudeType = ml;
+        return;
     }
 
     if (magnitudeType == "ms") {
         eq.magnitudeType = ms;
+        return;
     }
 
     if (magnitudeType == "mb") {
         eq.magnitudeType = mb;
+        return;
     }
 
     if (magnitudeType == "mw") {
         eq.magnitudeType = mw;
+        return;
     }
 
     errorMessageWithExit("Error: invalid magnitude type of this earthquake!\n");
@@ -404,7 +421,7 @@ string getMagnitudeType(earthquake eq) {
 
 }
 
-void setMagnitude(float magnitude, earthquake eq) {
+void setMagnitude(float magnitude, earthquake &eq) {
 
 	// magnitude must be a positive number
     if (magnitude <= 0) {
@@ -462,5 +479,47 @@ int daysOfAMonth(months month, int year) {
 			return 31;
 			break;
 	}
+
+}
+
+// read header from input file
+void headerProcessing(ifstream &inputFile, ofstream &outputFile, string outputFileName, earthquake &eq) {
+
+    string eventID, date, time, timeZone, earthquakeName;
+    double evlo, evla, evdp;
+    string magnitudeType;
+    float magnitude;
+
+    // first line is event ID
+    getline(inputFile, eventID);
+    setEventID(eventID, eq);
+
+    // second line is date time and time zone
+    inputFile >> date >> time >> timeZone;
+    setDate(date, eq);
+    setTime(time, eq);
+    setTimeZone(timeZone, eq);
+
+    // third line is earthquake name
+    // avoid the enter key of last line
+    getline(inputFile, earthquakeName);
+    getline(inputFile, earthquakeName);
+    setEarthquakeName(earthquakeName, eq);
+
+    // forth line is events information
+    inputFile >> evlo >> evla >> evdp >> magnitudeType >> magnitude;
+    setEvlo(evlo, eq);
+    setEvla(evla, eq);
+    setEvdp(evdp, eq);
+    setMagnitudeType(magnitudeType, eq);
+    setMagnitude(magnitude, eq);
+
+    // if all the infomation are correct, then write output header
+    openOutput(outputFile, outputFileName);
+
+    outputFile << "# " << getDay(eq) << " " << getMonth(eq) << " " << getYear(eq) << " ";
+    outputFile << getTime(eq) << " " << getTimeZone(eq) << " " << getMagnitudeType(eq) << " " << getMagnitude(eq) << " ";
+    outputFile << getEarthqaukeName(eq) << " [" << getEventID(eq) << "] (";
+    outputFile << getEvlo(eq) << ", " << getEvla(eq) << ", " << getEvdp(eq) << ")" << endl;
 
 }

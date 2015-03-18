@@ -1,8 +1,25 @@
+/******************************************************************************
+-   myFunction.h
+-   Prog Tools for Scits Engrs - CIVL 8903 Homework VI
+-
+-   File Discreption: functions used in this program
+-
+-   Author: Yang Yang
+-
+-   Github Repository: https://github.com/SwiftHickory/homework6.git
+******************************************************************************/
+
 #ifndef MYFUNCTION_H
 #define MYFUNCTION_H
 
-const string logFileName = "yang.log";
-ofstream logFile;
+#include <iostream>
+#include <cctype>
+#include <string>
+#include <fstream>
+#include <cstdlib>
+#include <sstream>
+
+using namespace std;
 
 // function to open input file
 void openInput(ifstream &inputFile, string fileName);
@@ -10,20 +27,14 @@ void openInput(ifstream &inputFile, string fileName);
 // function to open output file
 void openOutput(ofstream &outputFile, string fileName);
 
-// read header can then produce output header
-void headerProcessing(ifstream &inputFile, ofstream &outputFile, string outputFileName);
-
-// read table and then produce output
-void tableProcessing(ifstream &inputFile, ofstream &outputFile);
-
-// read and processing one entry
-bool processOneEntry(ifstream &inputFile, station &entry, int entryNumber, string networkCode);
-
 // check whether a string contains only digits
 bool is_digits(string str);
 
 // change all the letters in a string to lower case
 string lowerString(string str);
+
+// change all the letters in a string to upper case
+string upperString(string str);
 
 // convert a int to string
 string intToString(int num);
