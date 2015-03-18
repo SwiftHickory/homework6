@@ -14,8 +14,6 @@
 
 #include "earthquake.h"
 
-using namespace std;
-
 // case sensitive
 enum networkCodeType {
     CE,

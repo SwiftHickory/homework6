@@ -1,6 +1,4 @@
 #include "station.h"
-#include "earthquake.h"
-#include "myFunction.h"
 
 bool setNetworkCode(string networkCode, station &st) {
 
@@ -268,14 +266,14 @@ bool processOneEntry(ifstream &inputFile, station &entry, int entryNumber, strin
 	// read type of band
     inputFile >> typeOfBand;
     if (!setBandType(typeOfBand, entry)) {
-        errorMessage("Entry # " + intToString(entryNumber) + " ignored. Invalid instrument type.\n");
+        errorMessage("Entry # " + intToString(entryNumber) + " ignored. Invalid band type.\n");
         isValidEntry = false;
     }
 
     // read type of instrument
     inputFile >> typeOfInstrument;
     if (!setInstrumentType(typeOfInstrument, entry)) {
-        errorMessage("Entry # " + intToString(entryNumber) + " ignored. Invalid band type.\n");
+        errorMessage("Entry # " + intToString(entryNumber) + " ignored. Invalid instrument type.\n");
         isValidEntry = false;
     }
 

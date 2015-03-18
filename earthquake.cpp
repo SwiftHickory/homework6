@@ -1,5 +1,4 @@
 #include "earthquake.h"
-#include "myFunction.h"
 
 void setEventID(string eventID, earthquake &eq) {
 
@@ -54,11 +53,6 @@ void setTime(string time, earthquake &eq) {
         string minute = time.substr(3, 2);
         string second = time.substr(6, 2);
         string millisecond = time.substr(9, 3);
-
-        //  hour, minute, second and millisecond should be numbers 
-        if (!is_digits(hour + minute + second + millisecond)) {
-            errorMessageWithExit("Error: invalid time of this earthquake!\n");
-        }
 
         setHour(hour, eq);
         setMinute(minute, eq);
@@ -316,7 +310,13 @@ void setDay(string day, earthquake &eq) {
 
 string getDay(earthquake eq) {
 
-	return intToString(eq.day);
+	string day = intToString(eq.day);
+
+    if (day.length() == 1) {
+        day = "0" + day;
+    }
+
+    return day;
 
 }
 

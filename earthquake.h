@@ -14,8 +14,6 @@
 
 #include "myFunction.h"
 
-using namespace std;
-
 // case insensitive
 enum typeOfMagnitudeType {
     ml,
