@@ -11,11 +11,9 @@
 ******************************************************************************/
 
 #include "station.h"
+#include "global.h"
 
 using namespace std;
-
-const extern string logFileName = "yang.log";
-extern ofstream logFile;
 
 // main function
 int main() {
@@ -31,14 +29,14 @@ int main() {
     cin >> inputFileName;
     openInput(inputFile, inputFileName);
 
-    errorMessage("Opening file: " + inputFileName + "\n");
-    errorMessage("Processing input...\n");
+    printOutput(logFile, "Opening file: " + inputFileName + "\n");
+    printOutput(logFile, "Processing input...\n");
 
     headerProcessing(inputFile, outputFile, outputFileName, eq);
-    errorMessage("Header read correctly!\n");
+    printOutput(logFile, "Header read correctly!\n");
 
     tableProcessing(inputFile, outputFile, eq);
-    errorMessage("Finished!\n");
+    printOutput(logFile, "Finished!\n");
 
     inputFile.close();
     outputFile.close();

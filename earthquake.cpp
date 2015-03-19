@@ -1,4 +1,5 @@
 #include "earthquake.h"
+#include "global.h"
 
 void setEventID(string eventID, earthquake &eq) {
 
@@ -28,12 +29,12 @@ void setDate(string date, earthquake &eq) {
 
         // date format is mm/dd/year or mm-dd-year
         if ((date[2] != '/' || date[5] != '/') && (date[2] != '-' || date[5] != '-')) {
-            errorMessageWithExit("Error: invalid date format of this earthquake!\n");
+            printOutput(logFile, "Error: invalid date format of this earthquake!\n", true);
         }
 
         eq.date = date;
     } else {
-        errorMessageWithExit("Error: invalid date of this earthquake!\n");
+        printOutput(logFile, "Error: invalid date of this earthquake!\n", true);
     }
 
 }
@@ -61,12 +62,12 @@ void setTime(string time, earthquake &eq) {
 
         // check for delimer
         if (time[2] != ':' || time[5] != ':' || time[8] != '.') {
-            errorMessageWithExit("Error: invalid time format of this earthquake!\n");
+            printOutput(logFile, "Error: invalid time format of this earthquake!\n", true);
         }
 
         eq.time = time;
     } else {
-        errorMessageWithExit("Error: invalid time of this earthquake!\n");
+        printOutput(logFile, "Error: invalid time of this earthquake!\n", true);
     }
 
 }
@@ -80,12 +81,12 @@ string getTime(earthquake eq) {
 void setHour(string hour, earthquake &eq) {
 
 	if (!is_digits(hour)) {
-		errorMessageWithExit("Error: invalid time hour of this earthquake!\n");
+		printOutput(logFile, "Error: invalid time hour of this earthquake!\n", true);
 	} else {
 		eq.hour = atoi(hour.c_str());
 
 		if (eq.hour < 0 || eq.hour > 23) {
-        	errorMessageWithExit("Error: invalid time hour of this earthquake!\n");
+        	printOutput(logFile, "Error: invalid time hour of this earthquake!\n", true);
         }
 	}
 
@@ -100,12 +101,12 @@ string getHour(earthquake eq) {
 void setMinute(string minute, earthquake &eq) {
 
 	if (!is_digits(minute)) {
-		errorMessageWithExit("Error: invalid time minute of this earthquake!\n");
+		printOutput(logFile, "Error: invalid time minute of this earthquake!\n", true);
 	} else {
 		eq.minute = atoi(minute.c_str());
 
 		if (eq.minute < 0 || eq.minute > 59) {
-        	errorMessageWithExit("Error: invalid time minute of this earthquake!\n");
+        	printOutput(logFile, "Error: invalid time minute of this earthquake!\n", true);
         }
 	}
 
@@ -120,12 +121,12 @@ string getMinute(earthquake eq) {
 void setSecond(string second, earthquake &eq) {
 
 	if (!is_digits(second)) {
-		errorMessageWithExit("Error: invalid time second of this earthquake!\n");
+		printOutput(logFile, "Error: invalid time second of this earthquake!\n", true);
 	} else {
 		eq.second = atoi(second.c_str());
 
 		if (eq.second < 0 || eq.second > 59) {
-        	errorMessageWithExit("Error: invalid time second of this earthquake!\n");
+        	printOutput(logFile, "Error: invalid time second of this earthquake!\n", true);
         }
 	}
 
@@ -140,12 +141,12 @@ string getSecond(earthquake eq) {
 void setMillisecond(string millisecond, earthquake &eq) {
 
 	if (!is_digits(millisecond)) {
-		errorMessageWithExit("Error: invalid time millisecond of this earthquake!\n");
+		printOutput(logFile, "Error: invalid time millisecond of this earthquake!\n", true);
 	} else {
 		eq.millisecond = atoi(millisecond.c_str());
 
 		if (eq.millisecond< 0) {
-        	errorMessageWithExit("Error: invalid time millisecond of this earthquake!\n");
+        	printOutput(logFile, "Error: invalid time millisecond of this earthquake!\n", true);
         }
 	}
 
@@ -161,7 +162,7 @@ void setTimeZone(string timeZone, earthquake &eq) {
 
 	// time zone must be three characters
     if (timeZone.length() != 3) {
-        errorMessageWithExit("Error: invalid time zone of this earthquake!\n");
+        printOutput(logFile, "Error: invalid time zone of this earthquake!\n", true);
     } else {
     	eq.timeZone = timeZone;
     }
@@ -247,7 +248,7 @@ void setMonth(string month, earthquake &eq) {
     	return;
     }
     
-    errorMessageWithExit("Error: invalid month of this earthquake!\n");
+    printOutput(logFile, "Error: invalid month of this earthquake!\n", true);
 
 }
 
@@ -298,11 +299,11 @@ void setDay(string day, earthquake &eq) {
 
 	// day should be numbers 
     if (!is_digits(day)) {
-        errorMessageWithExit("Error: invalid date day of this earthquake!\n");
+        printOutput(logFile, "Error: invalid date day of this earthquake!\n", true);
      } else {
      	eq.day = atoi(day.c_str());
      	if (eq.day < 0 || eq.day > daysOfAMonth(eq.month, eq.year)) {
-     		errorMessageWithExit("Error: invalid date day of this earthquake!\n");
+     		printOutput(logFile, "Error: invalid date day of this earthquake!\n", true);
      	}
      }
 
@@ -324,7 +325,7 @@ void setYear(string year, earthquake &eq) {
 
 	// year should be numbers 
     if (!is_digits(year)) {
-        errorMessageWithExit("Error: invalid date year of this earthquake!\n");
+        printOutput(logFile, "Error: invalid date year of this earthquake!\n", true);
      } else {
      	eq.year = atoi(year.c_str());
      }
@@ -398,7 +399,7 @@ void setMagnitudeType(string magnitudeType, earthquake &eq) {
         return;
     }
 
-    errorMessageWithExit("Error: invalid magnitude type of this earthquake!\n");
+    printOutput(logFile, "Error: invalid magnitude type of this earthquake!\n", true);
 
 }
 
@@ -425,7 +426,7 @@ void setMagnitude(float magnitude, earthquake &eq) {
 
 	// magnitude must be a positive number
     if (magnitude <= 0) {
-        errorMessageWithExit("Error: magnitude must be a positive number\n");
+        printOutput(logFile, "Error: magnitude must be a positive number\n", true);
     } else {
     	eq.magnitude = magnitude;
     }

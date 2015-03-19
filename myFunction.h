@@ -19,6 +19,8 @@
 #include <cstdlib>
 #include <sstream>
 
+#include "global.h"
+
 using namespace std;
 
 // function to open input file
@@ -39,14 +41,8 @@ string upperString(string str);
 // convert a int to string
 string intToString(int num);
 
-// function to print error message to both terminal and error file
-void errorMessage(const string &message);
-
-// function to print error message to both terminal and error file and then exit the program
-void errorMessageWithExit(const string &message);
-
 // print messeage to both terminal and a file
-void printOutput(ofstream &outputFile, const string &message);
+void printOutput(ofstream &outputFile, const string &message, bool needExit = false, string fileName = logFileName);
 
 // deal with some left things to exit program safely
 void finishProgram();

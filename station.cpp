@@ -1,4 +1,5 @@
 #include "station.h"
+#include "global.h"
 
 bool setNetworkCode(string networkCode, station &st) {
 
@@ -238,9 +239,9 @@ void tableProcessing(ifstream &inputFile, ofstream &outputFile, earthquake eq) {
         }
     }
 
-    errorMessage("Total invalid entries ignored: " + intToString(numberOfEntryRead - numberOfValidEntries) + "\n");
-    errorMessage("Totoal valid entries read: " + intToString(numberOfValidEntries) + "\n");
-    errorMessage("Total singal names produced: " + intToString(numberOfSignals) + "\n");
+    printOutput(logFile, "Total invalid entries ignored: " + intToString(numberOfEntryRead - numberOfValidEntries) + "\n");
+    printOutput(logFile, "Totoal valid entries read: " + intToString(numberOfValidEntries) + "\n");
+    printOutput(logFile, "Total singal names produced: " + intToString(numberOfSignals) + "\n");
 
 }
 
@@ -252,35 +253,35 @@ bool processOneEntry(ifstream &inputFile, station &entry, int entryNumber, strin
 
     // convert networkCode to enum type
     if (!setNetworkCode(networkCode, entry)) {
-        errorMessage("Entry # " + intToString(entryNumber) + " ignored. Invalid network.\n");
+        printOutput(logFile, "Entry # " + intToString(entryNumber) + " ignored. Invalid network.\n");
         isValidEntry = false;
     }
 
     // read station code
     inputFile >> stationCode;
     if (!setStationCode(stationCode, entry)) {
-        errorMessage("Entry # " + intToString(entryNumber) + " ignored. Invalid station code.\n");
+        printOutput(logFile, "Entry # " + intToString(entryNumber) + " ignored. Invalid station code.\n");
         isValidEntry = false;
     }
 
 	// read type of band
     inputFile >> typeOfBand;
     if (!setBandType(typeOfBand, entry)) {
-        errorMessage("Entry # " + intToString(entryNumber) + " ignored. Invalid band type.\n");
+        printOutput(logFile, "Entry # " + intToString(entryNumber) + " ignored. Invalid band type.\n");
         isValidEntry = false;
     }
 
     // read type of instrument
     inputFile >> typeOfInstrument;
     if (!setInstrumentType(typeOfInstrument, entry)) {
-        errorMessage("Entry # " + intToString(entryNumber) + " ignored. Invalid instrument type.\n");
+        printOutput(logFile, "Entry # " + intToString(entryNumber) + " ignored. Invalid instrument type.\n");
         isValidEntry = false;
     }
 
     // read orientation
     inputFile >> orientation;
     if (!setOrientation(orientation, entry)) {
-        errorMessage("Entry # " + intToString(entryNumber) + " ignored. Invalid orientation.\n");
+        printOutput(logFile, "Entry # " + intToString(entryNumber) + " ignored. Invalid orientation.\n");
         isValidEntry = false;
     }
 

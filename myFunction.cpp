@@ -1,7 +1,5 @@
 #include "myFunction.h"
-
-const string logFileName = "yang.log";
-ofstream logFile;
+#include "global.h"
 
 // function to open input file
 void openInput(ifstream &inputFile, string fileName) {
@@ -10,7 +8,7 @@ void openInput(ifstream &inputFile, string fileName) {
 
     // perform sanity check it
     if (!inputFile.is_open()) {
-        errorMessageWithExit("Cannot open input file: " + fileName + "\n");
+        printOutput(logFile, "Cannot open input file: " + fileName + "\n", true);
     }
 
 }
@@ -26,7 +24,7 @@ void openOutput(ofstream &outputFile, string fileName) {
             // if we can open error file, just print out to terminal
             cout << "Cannot open log file: " << logFileName << endl;
         } else {
-            errorMessageWithExit("Cannot open output file: " + fileName + "\n");
+            printOutput(logFile, "Cannot open output file: " + fileName + "\n", true);
         }
     }
 
@@ -77,32 +75,20 @@ string intToString(int num) {
 
 }
 
-// function to print error message to both terminal and error file
-void errorMessage(const string &message) {
-
-    // check whether the error file is opened
-    if (!logFile.is_open()) {
-        openOutput(logFile, logFileName);
-    }
-
-    printOutput(logFile, message);
-
-}
-
-// function to print error message to both terminal and error file and then exit the program
-void errorMessageWithExit(const string &message) {
-
-    errorMessage(message);
-
-    exit(EXIT_FAILURE);
-
-}
-
 // print messeage to both terminal and a file
-void printOutput(ofstream &outputFile, const string &message) {
+void printOutput(ofstream &outputFile, const string &message, bool needExit, string fileName) {
+
+    // if output file is not opened, it is error file. Open it first
+    if (!outputFile.is_open()) {
+        openOutput(outputFile, fileName);
+    }
 
     cout << message;
     outputFile << message;
+
+    if (needExit) {
+        exit(EXIT_FAILURE);
+    }
 
 }
 
